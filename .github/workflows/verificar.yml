@@ -1,0 +1,31 @@
+name: Verificar index.html
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  verificar-archivo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Verificar que index.html existe
+        run: |
+          if [ -f "index.html" ]; then
+            echo "✅ ¡Éxito! El archivo index.html fue encontrado."
+          else
+            echo "❌ Error: index.html no existe."
+            exit 1
+          fi
+
+      - name: Mostrar contenido del archivo
+        run: |
+          echo "--- Contenido de index.html ---"
+          cat index.html
+          echo "-------------------------------"
+          echo "✅ Verificación completada correctamente."
